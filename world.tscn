@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://bb3573trjemtb"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_hv4v1"]
+[ext_resource type="Script" path="res://LevelGenerator.gd" id="2_boife"]
+[ext_resource type="PackedScene" uid="uid://b4uwecf7jv8rb" path="res://player.tscn" id="3_it2cd"]
+[ext_resource type="Texture2D" uid="uid://dd2tiijrbbqoe" path="res://icon.svg" id="4_l04t1"]
+[ext_resource type="PackedScene" uid="uid://d0schlscaeejk" path="res://block.tscn" id="4_rsopw"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_hv4v1")
+
+[node name="Player" parent="." instance=ExtResource("3_it2cd")]
+position = Vector2(352, 88)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="LevelGen" type="Node2D" parent="."]
+script = ExtResource("2_boife")
+
+[node name="spawn_timer" type="Timer" parent="LevelGen"]
+wait_time = 0.3
+autostart = true
+
+[node name="right" type="Marker2D" parent="LevelGen"]
+position = Vector2(560, 128)
+rotation = -1.57079
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelGen/right"]
+visible = false
+z_index = 1
+position = Vector2(-32, 32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_l04t1")
+
+[node name="left" type="Marker2D" parent="LevelGen"]
+position = Vector2(112, 128)
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelGen/left"]
+visible = false
+z_index = 1
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_l04t1")
+
+[node name="Blocks" type="Node2D" parent="LevelGen"]
+
+[node name="Block" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(176, 128)
+
+[node name="Block2" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(240, 128)
+
+[node name="Block3" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(304, 128)
+
+[node name="Block8" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(368, 128)
+
+[node name="Block9" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(432, 128)
+
+[node name="Block10" parent="LevelGen/Blocks" instance=ExtResource("4_rsopw")]
+position = Vector2(496, 128)
+
+[connection signal="timeout" from="LevelGen/spawn_timer" to="LevelGen" method="_on_spawn_timer_timeout"]
